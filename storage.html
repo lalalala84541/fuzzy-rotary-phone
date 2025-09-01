@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G2B Data Storage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #3498db;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>G2B Data Storage</h1>
+    <p>This page stores data for the G2B Gift Card Marketplace. Do not close this page.</p>
+    
+    <h2>Stored Data:</h2>
+    <pre id="data-display">Loading...</pre>
+    
+    <script>
+        // Initialize data storage
+        let globalData = {
+            payments: [],
+            users: [],
+            analytics: []
+        };
+        
+        // Load any existing data from localStorage
+        try {
+            const savedData = localStorage.getItem('g2b_global_data');
+            if (savedData) {
+                globalData = JSON.parse(savedData);
+            }
+        } catch (e) {
+            console.error('Error loading data:', e);
+        }
+        
+        // Update the display
+        function updateDisplay() {
+            const display = document.getElementById('data-display');
+            display.textContent = JSON.stringify({
+                payments: globalData.payments.length,
+                users: globalData.users.length,
+                analytics: globalData.analytics.length,
+                lastUpdated: new Date().toLocaleString()
+            }, null, 2);
+        }
+        
+        // Listen for messages from other windows
+        window.addEventListener('message', function(event) {
+            // Only accept messages from our own domain
+            if (event.origin !== window.location.origin) return;
+            
+            const message = event.data;
+            
+            // Handle different message types
+            if (message.action === 'store') {
+                // Store new data
+                if (message.type === 'payment') {
+                    globalData.payments.unshift(message.data);
+                } else if (message.type === 'user') {
+                    globalData.users.unshift(message.data);
+                } else if (message.type === 'analytics') {
+                    globalData.analytics.unshift(message.data);
+                }
+                
+                // Save to localStorage
+                localStorage.setItem('g2b_global_data', JSON.stringify(globalData));
+                
+                // Update display
+                updateDisplay();
+                
+                // Send acknowledgment
+                event.source.postMessage({
+                    action: 'stored',
+                    success: true,
+                    type: message.type
+                }, event.origin);
+            } else if (message.action === 'fetch') {
+                // Send all data back
+                event.source.postMessage({
+                    action: 'data',
+                    data: globalData
+                }, event.origin);
+            }
+        });
+        
+        // Initial display update
+        updateDisplay();
+        
+        // Periodically update display
+        setInterval(updateDisplay, 5000);
+    </script>
+</body>
+</html>

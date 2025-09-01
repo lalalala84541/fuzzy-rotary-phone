@@ -1,0 +1,18 @@
+{
+  "name": "G2B Gift Card Marketplace",
+  "description": "Premium gift card marketplace with PayPal, Amazon, Steam, and more.",
+  "repository": "https://github.com/yourusername/g2b-gift-cards",
+  "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1200px-PayPal.svg.png",
+  "keywords": ["gift cards", "paypal", "amazon", "steam", "marketplace"],
+  "env": {
+    "NODE_ENV": {
+      "description": "Environment for the application",
+      "value": "production"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

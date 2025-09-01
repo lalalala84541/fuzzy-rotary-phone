@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - G2B Gift Card Marketplace</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/hide-preview.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">G<span>2</span>B</a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#gift-cards">Gift Cards</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#popular">Popular</a></li>
+                <li><a href="index.html#support">Support</a></li>
+            </ul>
+            
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Sign In</a>
+                <a href="register.html" class="btn btn-primary">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Register Form -->
+    <div class="auth-container">
+        <h2 class="auth-title">Create Account</h2>
+        
+        <form id="register-form" onsubmit="handleRegister(); return false;">
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" required>
+                <small style="display: block; margin-top: 5px; font-size: 12px; color: #666;">Password must be at least 8 characters long and include a number and a special character.</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" class="form-control" required>
+            </div>
+            
+            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                <input type="checkbox" id="terms" required style="margin-right: 8px;">
+                <label for="terms" style="font-size: 14px; color: #555;">I agree to the <a href="#" style="color: var(--primary-color);">Terms of Service</a> and <a href="#" style="color: var(--primary-color);">Privacy Policy</a></label>
+            </div>
+            
+            <div class="form-group">
+                <button type="submit" class="form-submit">Create Account</button>
+            </div>
+            
+            <div class="form-footer">
+                <p>Already have an account? <a href="login.html">Sign In</a></p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <p style="font-size: 14px; color: #777; margin-bottom: 15px;">Or sign up with</p>
+                
+                <div style="display: flex; justify-content: center; gap: 15px;">
+                    <a href="#" style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background-color: #3b5998; color: white; text-decoration: none;">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    
+                    <a href="#" style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background-color: #1da1f2; color: white; text-decoration: none;">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    
+                    <a href="#" style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background-color: #db4437; color: white; text-decoration: none;">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    
+                    <a href="#" style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background-color: #0077b5; color: white; text-decoration: none;">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-section">
+                <h3>About G2B</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Gift Cards</h3>
+                <ul class="footer-links">
+                    <li><a href="#">PayPal</a></li>
+                    <li><a href="#">Amazon</a></li>
+                    <li><a href="#">Steam</a></li>
+                    <li><a href="#">iTunes</a></li>
+                    <li><a href="#">Google Play</a></li>
+                    <li><a href="#">Visa</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                </ul>
+                
+                <div style="margin-top: 20px;">
+                    <h3>Payment Methods</h3>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <i class="fab fa-cc-visa" style="font-size: 24px; color: #ccc;"></i>
+                        <i class="fab fa-cc-mastercard" style="font-size: 24px; color: #ccc;"></i>
+                        <i class="fab fa-cc-amex" style="font-size: 24px; color: #ccc;"></i>
+                        <i class="fab fa-cc-paypal" style="font-size: 24px; color: #ccc;"></i>
+                        <i class="fab fa-bitcoin" style="font-size: 24px; color: #ccc;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 G2B Gift Card Marketplace. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

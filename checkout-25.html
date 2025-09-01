@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - PayPal Gift Card $25 - G2B</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/hide-preview.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">G<span>2</span>B</a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#gift-cards">Gift Cards</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#popular">Popular</a></li>
+                <li><a href="index.html#support">Support</a></li>
+            </ul>
+            
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Sign In</a>
+                <a href="register.html" class="btn btn-primary">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Checkout Form -->
+    <div class="checkout-container">
+        <h2 class="checkout-title">Secure Checkout</h2>
+        
+        <form id="checkout-form" onsubmit="return processPayment()">
+            <input type="hidden" id="product-name" value="PayPal Gift Card $25">
+            <input type="hidden" id="product-price" value="$22.50">
+            
+            <h3 class="form-section-title">Personal Information</h3>
+            <div class="checkout-form">
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" placeholder="(123) 456-7890" required>
+                </div>
+            </div>
+            
+            <h3 class="form-section-title">Payment Information</h3>
+            <div class="checkout-form">
+                <div class="form-group full-width">
+                    <label for="card-number">Card Number</label>
+                    <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9012 3456" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="card-name">Name on Card</label>
+                    <input type="text" id="card-name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="expiry">Expiry Date</label>
+                    <input type="text" id="expiry" class="form-control" placeholder="MM/YY" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" class="form-control" placeholder="123" required>
+                </div>
+            </div>
+            
+            <h3 class="form-section-title">Billing Address</h3>
+            <div class="checkout-form">
+                <div class="form-group full-width">
+                    <label for="address">Street Address</label>
+                    <input type="text" id="address" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="state">State/Province</label>
+                    <input type="text" id="state" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="zip">ZIP/Postal Code</label>
+                    <input type="text" id="zip" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select id="country" class="form-control" required>
+                        <option value="">Select Country</option>
+                        <option value="US">United States</option>
+                        <option value="CA">Canada</option>
+                        <option value="GB">United Kingdom</option>
+                        <option value="AU">Australia</option>
+                        <option value="DE">Germany</option>
+                        <option value="FR">France</option>
+                        <option value="ES">Spain</option>
+                        <option value="IT">Italy</option>
+                        <option value="JP">Japan</option>
+                        <option value="CN">China</option>
+                        <option value="BR">Brazil</option>
+                        <option value="MX">Mexico</option>
+                        <option value="IN">India</option>
+                        <option value="ZA">South Africa</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="order-summary">
+                <h3 class="summary-title">Order Summary</h3>
+                
+                <div class="summary-item">
+                    <span>PayPal Gift Card $25</span>
+                    <span>$22.50</span>
+                </div>
+                
+                <div class="summary-item">
+                    <span>Discount</span>
+                    <span>-$2.50</span>
+                </div>
+                
+                <div class="summary-item">
+                    <span>Processing Fee</span>
+                    <span>$1.00</span>
+                </div>
+                
+                <div class="summary-total">
+                    <span>Total</span>
+                    <span>$23.50</span>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                    <input type="checkbox" id="terms" required style="margin-right: 10px;">
+                    <label for="terms" style="font-size: 14px; color: #555;">I agree to the <a href="#" style="color: var(--primary-color);">Terms of Service</a> and <a href="#" style="color: var(--primary-color);">Privacy Policy</a></label>
+                </div>
+                
+                <button type="submit" class="form-submit">Complete Purchase</button>
+                
+                <div style="margin-top: 15px; text-align: center;">
+                    <p style="font-size: 14px; color: #555;">
+                        <i class="fas fa-lock" style="margin-right: 5px;"></i>
+                        Your payment information is encrypted and secure
+                    </p>
+                </div>
+                
+                <div style="margin-top: 20px; display: flex; justify-content: center; gap: 15px;">
+                    <i class="fab fa-cc-visa" style="font-size: 30px; color: #1a1f71;"></i>
+                    <i class="fab fa-cc-mastercard" style="font-size: 30px; color: #eb001b;"></i>
+                    <i class="fab fa-cc-amex" style="font-size: 30px; color: #2e77bc;"></i>
+                    <i class="fab fa-cc-discover" style="font-size: 30px; color: #ff6000;"></i>
+                    <i class="fab fa-cc-paypal" style="font-size: 30px; color: #003087;"></i>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-section">
+                <h3>About G2B</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Gift Cards</h3>
+                <ul class="footer-links">
+                    <li><a href="#">PayPal</a></li>
+                    <li><a href="#">Amazon</a></li>
+                    <li><a href="#">Steam</a></li>
+                    <li><a href="#">iTunes</a></li>
+                    <li><a href="#">Google Play</a></li>
+                    <li><a href="#">Visa</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                </ul>
+                
+                <div style="margin-top: 20px;">
+                    <h3>Payment Methods</h3>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <i class="fab fa-cc-visa" style="font-size: 24px; color: #ccc;"></i>
+                        <i class="fab fa-cc-mastercard" style="font-size: 24px; color: #ccc;"></i>
+                        <i class="fab fa-cc-amex" style="font-size: 24px; color: #ccc;"></i>
+                        <i class="fab fa-cc-paypal" style="font-size: 24px; color: #ccc;"></i>
+                        <i class="fab fa-bitcoin" style="font-size: 24px; color: #ccc;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 G2B Gift Card Marketplace. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

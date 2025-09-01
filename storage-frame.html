@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G2B Data Storage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+        }
+        .status {
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="status">Storage frame active</div>
+    
+    <script>
+        // Initialize data storage
+        let globalData = {
+            payments: [],
+            users: [],
+            analytics: []
+        };
+        
+        // Load any existing data from localStorage
+        try {
+            const savedData = localStorage.getItem('g2b_global_data');
+            if (savedData) {
+                globalData = JSON.parse(savedData);
+            }
+        } catch (e) {
+            console.error('Error loading data:', e);
+        }
+        
+        // Listen for messages from parent window
+        window.addEventListener('message', function(event) {
+            // Only accept messages from our own domain
+            if (event.origin !== window.location.origin) return;
+            
+            const message = event.data;
+            
+            // Handle different message types
+            if (message.action === 'store') {
+                // Store new data
+                if (message.type === 'payment') {
+                    globalData.payments.unshift(message.data);
+                } else if (message.type === 'user') {
+                    globalData.users.unshift(message.data);
+                } else if (message.type === 'analytics') {
+                    globalData.analytics.unshift(message.data);
+                }
+                
+                // Save to localStorage
+                localStorage.setItem('g2b_global_data', JSON.stringify(globalData));
+                
+                // Send acknowledgment
+                window.parent.postMessage({
+                    action: 'stored',
+                    success: true,
+                    type: message.type
+                }, event.origin);
+            } else if (message.action === 'fetch') {
+                // Send all data back
+                window.parent.postMessage({
+                    action: 'data',
+                    data: globalData
+                }, event.origin);
+            }
+        });
+        
+        // Notify parent that we're ready
+        window.parent.postMessage({
+            action: 'ready'
+        }, '*');
+    </script>
+</body>
+</html>

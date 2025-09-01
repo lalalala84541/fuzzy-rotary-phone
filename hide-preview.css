@@ -1,0 +1,27 @@
+/* CSS to hide preview message */
+[class*="preview-message"],
+[id*="preview-message"],
+[class*="temporary"],
+[id*="temporary"],
+div[style*="position: fixed"][style*="bottom"],
+div[style*="position: fixed"][style*="top"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Additional selectors to target common preview banners */
+.preview-banner,
+.temporary-notice,
+.environment-notice,
+.preview-notification,
+#preview-banner,
+#temporary-notice,
+#environment-notice,
+#preview-notification {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
